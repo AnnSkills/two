@@ -1,0 +1,81 @@
+<div>
+  <h2 id="page-heading" data-cy="FileHeading">
+    <span annaTranslate="linterApp.file.home.title">Files</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span annaTranslate="linterApp.file.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-file"
+        [routerLink]="['/file/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span annaTranslate="linterApp.file.home.createLabel"> Create a new File </span>
+      </button>
+    </div>
+  </h2>
+
+  <anna-alert-error></anna-alert-error>
+
+  <anna-alert></anna-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="files?.length === 0">
+    <span annaTranslate="linterApp.file.home.notFound">No files found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="files && files.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span annaTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span annaTranslate="linterApp.file.name">Name</span></th>
+          <th scope="col"><span annaTranslate="linterApp.file.sourceCode">Source Code</span></th>
+          <th scope="col"><span annaTranslate="linterApp.file.creationDate">Creation Date</span></th>
+          <th scope="col"><span annaTranslate="linterApp.file.user">User</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of files; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/file', file.id, 'view']">{{ file.id }}</a>
+          </td>
+          <td>{{ file.name }}</td>
+          <td>
+            <a *ngIf="file.sourceCode" (click)="openFile(file.sourceCode, file.sourceCodeContentType)" annaTranslate="entity.action.open"
+              >open</a
+            >
+            <span *ngIf="file.sourceCode">{{ file.sourceCodeContentType }}, {{ byteSize(file.sourceCode) }}</span>
+          </td>
+          <td>{{ file.creationDate | formatMediumDatetime }}</td>
+          <td>
+            {{ file.user?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/file', file.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/file', file.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(file)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

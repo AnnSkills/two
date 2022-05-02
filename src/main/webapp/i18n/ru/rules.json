@@ -1,0 +1,26 @@
+{
+  "linterApp": {
+    "rules": {
+      "home": {
+        "title": "Rules",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый Rules",
+        "createOrEditLabel": "Создать или отредактировать Rules",
+        "notFound": "Rules не найдено"
+      },
+      "created": "Новый Rules создан с идентификатором {{ param }}",
+      "updated": "Rules обновлен с идентификатором {{ param }}",
+      "deleted": "Rules удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Rules {{ id }}?"
+      },
+      "detail": {
+        "title": "Rules"
+      },
+      "id": "ID",
+      "name": "Name",
+      "code": "Code",
+      "requirements": "Requirements"
+    }
+  }
+}

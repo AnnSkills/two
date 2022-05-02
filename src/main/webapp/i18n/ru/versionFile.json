@@ -1,0 +1,27 @@
+{
+  "linterApp": {
+    "versionFile": {
+      "home": {
+        "title": "Version Files",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый Version File",
+        "createOrEditLabel": "Создать или отредактировать Version File",
+        "notFound": "Version Files не найдено"
+      },
+      "created": "Новый Version File создан с идентификатором {{ param }}",
+      "updated": "Version File обновлен с идентификатором {{ param }}",
+      "deleted": "Version File удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Version File {{ id }}?"
+      },
+      "detail": {
+        "title": "Version File"
+      },
+      "id": "ID",
+      "name": "Name",
+      "sourceCode": "Source Code",
+      "creationDate": "Creation Date",
+      "file": "File"
+    }
+  }
+}

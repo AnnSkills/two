@@ -1,0 +1,76 @@
+<div>
+  <h2 id="page-heading" data-cy="BagHeading">
+    <span annaTranslate="linterApp.bag.home.title">Bags</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span annaTranslate="linterApp.bag.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-bag"
+        [routerLink]="['/bag/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span annaTranslate="linterApp.bag.home.createLabel"> Create a new Bag </span>
+      </button>
+    </div>
+  </h2>
+
+  <anna-alert-error></anna-alert-error>
+
+  <anna-alert></anna-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="bags?.length === 0">
+    <span annaTranslate="linterApp.bag.home.notFound">No bags found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="bags && bags.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span annaTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span annaTranslate="linterApp.bag.bagName">Bag Name</span></th>
+          <th scope="col"><span annaTranslate="linterApp.bag.description">Description</span></th>
+          <th scope="col"><span annaTranslate="linterApp.bag.status">Status</span></th>
+          <th scope="col"><span annaTranslate="linterApp.bag.user">User</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bag of bags; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/bag', bag.id, 'view']">{{ bag.id }}</a>
+          </td>
+          <td>{{ bag.bagName }}</td>
+          <td>{{ bag.description }}</td>
+          <td annaTranslate="{{ 'linterApp.Status.' + bag.status }}">{{ bag.status }}</td>
+          <td>
+            {{ bag.user?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/bag', bag.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/bag', bag.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(bag)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

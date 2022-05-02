@@ -1,0 +1,44 @@
+{
+  "applications": ["linter"],
+  "changelogDate": "20220502093306",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "bag",
+  "fields": [
+    {
+      "fieldName": "bagName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "OPEN (Open),CLOSED (Closed),DUPLICATE (Duplicate),IN_PROGRESS (Progress),REOPENED (Reopened),SOLVED (Solved),VERIFIED (Verified)"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Bag",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "task",
+      "otherEntityRelationshipName": "bag",
+      "relationshipName": "task",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "bag",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

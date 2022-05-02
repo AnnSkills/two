@@ -1,0 +1,28 @@
+{
+  "linterApp": {
+    "support": {
+      "home": {
+        "title": "Supports",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый Support",
+        "createOrEditLabel": "Создать или отредактировать Support",
+        "notFound": "Supports не найдено"
+      },
+      "created": "Новый Support создан с идентификатором {{ param }}",
+      "updated": "Support обновлен с идентификатором {{ param }}",
+      "deleted": "Support удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Support {{ id }}?"
+      },
+      "detail": {
+        "title": "Support"
+      },
+      "id": "ID",
+      "topic": "Topic",
+      "email": "Email",
+      "phone": "Phone",
+      "description": "Description",
+      "user": "User"
+    }
+  }
+}

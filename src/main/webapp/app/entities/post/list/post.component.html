@@ -1,0 +1,85 @@
+<div>
+  <h2 id="page-heading" data-cy="PostHeading">
+    <span annaTranslate="linterApp.post.home.title">Posts</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span annaTranslate="linterApp.post.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-post"
+        [routerLink]="['/post/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span annaTranslate="linterApp.post.home.createLabel"> Create a new Post </span>
+      </button>
+    </div>
+  </h2>
+
+  <anna-alert-error></anna-alert-error>
+
+  <anna-alert></anna-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="posts?.length === 0">
+    <span annaTranslate="linterApp.post.home.notFound">No posts found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="posts && posts.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr annaSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" annaSortBy="id"><span annaTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" annaSortBy="title"><span annaTranslate="linterApp.post.title">Title</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" annaSortBy="content">
+            <span annaTranslate="linterApp.post.content">Content</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" annaSortBy="picture">
+            <span annaTranslate="linterApp.post.picture">Picture</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" annaSortBy="date"><span annaTranslate="linterApp.post.date">Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" annaSortBy="user.login"><span annaTranslate="linterApp.post.user">User</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let post of posts; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/post', post.id, 'view']">{{ post.id }}</a>
+          </td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.content }}</td>
+          <td>
+            <a *ngIf="post.picture" (click)="openFile(post.picture, post.pictureContentType)" annaTranslate="entity.action.open">open</a>
+            <span *ngIf="post.picture">{{ post.pictureContentType }}, {{ byteSize(post.picture) }}</span>
+          </td>
+          <td>{{ post.date | formatMediumDatetime }}</td>
+          <td>
+            {{ post.user?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/post', post.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/post', post.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(post)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

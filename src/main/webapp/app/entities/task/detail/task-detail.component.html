@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="task">
+      <h2 data-cy="taskDetailsHeading"><span annaTranslate="linterApp.task.detail.title">Task</span></h2>
+
+      <hr />
+
+      <anna-alert-error></anna-alert-error>
+
+      <anna-alert></anna-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span annaTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ task.id }}</span>
+        </dd>
+        <dt><span annaTranslate="linterApp.task.taskName">Task Name</span></dt>
+        <dd>
+          <span>{{ task.taskName }}</span>
+        </dd>
+        <dt><span annaTranslate="linterApp.task.description">Description</span></dt>
+        <dd>
+          <span>{{ task.description }}</span>
+        </dd>
+        <dt><span annaTranslate="linterApp.task.deadline">Deadline</span></dt>
+        <dd>
+          <span>{{ task.deadline | formatMediumDate }}</span>
+        </dd>
+        <dt><span annaTranslate="linterApp.task.bag">Bag</span></dt>
+        <dd>
+          <div *ngIf="task.bag">
+            <a [routerLink]="['/bag', task.bag?.id, 'view']">{{ task.bag?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span annaTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/task', task.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span annaTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

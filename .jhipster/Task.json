@@ -1,0 +1,36 @@
+{
+  "applications": ["linter"],
+  "changelogDate": "20220502093406",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "task",
+  "fields": [
+    {
+      "fieldName": "taskName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "deadline",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Task",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "bag",
+      "otherEntityRelationshipName": "task",
+      "relationshipName": "bag",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}
