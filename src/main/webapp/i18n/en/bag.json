@@ -1,0 +1,28 @@
+{
+  "linterApp": {
+    "bag": {
+      "home": {
+        "title": "Bags",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Bag",
+        "createOrEditLabel": "Create or edit a Bag",
+        "notFound": "No Bags found"
+      },
+      "created": "A new Bag is created with identifier {{ param }}",
+      "updated": "A Bag is updated with identifier {{ param }}",
+      "deleted": "A Bag is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Bag {{ id }}?"
+      },
+      "detail": {
+        "title": "Bag"
+      },
+      "id": "ID",
+      "bagName": "Bag Name",
+      "description": "Description",
+      "status": "Status",
+      "task": "Task",
+      "user": "User"
+    }
+  }
+}

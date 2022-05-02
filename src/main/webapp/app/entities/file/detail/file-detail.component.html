@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="file">
+      <h2 data-cy="fileDetailsHeading"><span annaTranslate="linterApp.file.detail.title">File</span></h2>
+
+      <hr />
+
+      <anna-alert-error></anna-alert-error>
+
+      <anna-alert></anna-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span annaTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ file.id }}</span>
+        </dd>
+        <dt><span annaTranslate="linterApp.file.name">Name</span></dt>
+        <dd>
+          <span>{{ file.name }}</span>
+        </dd>
+        <dt><span annaTranslate="linterApp.file.sourceCode">Source Code</span></dt>
+        <dd>
+          <div *ngIf="file.sourceCode">
+            <a (click)="openFile(file.sourceCode, file.sourceCodeContentType)" annaTranslate="entity.action.open">open</a>
+            {{ file.sourceCodeContentType }}, {{ byteSize(file.sourceCode) }}
+          </div>
+        </dd>
+        <dt><span annaTranslate="linterApp.file.creationDate">Creation Date</span></dt>
+        <dd>
+          <span>{{ file.creationDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span annaTranslate="linterApp.file.user">User</span></dt>
+        <dd>
+          <span>{{ file.user?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span annaTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/file', file.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span annaTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

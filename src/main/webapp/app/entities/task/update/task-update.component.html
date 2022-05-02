@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="anna-task-heading" data-cy="TaskCreateUpdateHeading" annaTranslate="linterApp.task.home.createOrEditLabel">
+        Create or edit a Task
+      </h2>
+
+      <div>
+        <anna-alert-error></anna-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" annaTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" annaTranslate="linterApp.task.taskName" for="field_taskName">Task Name</label>
+          <input type="text" class="form-control" name="taskName" id="field_taskName" data-cy="taskName" formControlName="taskName" />
+          <div *ngIf="editForm.get('taskName')!.invalid && (editForm.get('taskName')!.dirty || editForm.get('taskName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('taskName')?.errors?.required"
+              annaTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" annaTranslate="linterApp.task.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" annaTranslate="linterApp.task.deadline" for="field_deadline">Deadline</label>
+          <div class="input-group">
+            <input
+              id="field_deadline"
+              data-cy="deadline"
+              type="text"
+              class="form-control"
+              name="deadline"
+              ngbDatepicker
+              #deadlineDp="ngbDatepicker"
+              formControlName="deadline"
+            />
+            <button type="button" class="btn btn-secondary" (click)="deadlineDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" annaTranslate="linterApp.task.bag" for="field_bag">Bag</label>
+          <select class="form-control" id="field_bag" data-cy="bag" name="bag" formControlName="bag">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="bagOption.id === editForm.get('bag')!.value?.id ? editForm.get('bag')!.value : bagOption"
+              *ngFor="let bagOption of bagsSharedCollection; trackBy: trackBagById"
+            >
+              {{ bagOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span annaTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span annaTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

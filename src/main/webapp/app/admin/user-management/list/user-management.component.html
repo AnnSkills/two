@@ -1,0 +1,124 @@
+<div>
+  <h2>
+    <span id="user-management-page-heading" annaTranslate="userManagement.home.title" data-cy="userManagementPageHeading">Users</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span annaTranslate="userManagement.home.refreshListLabel">Refresh List</span>
+      </button>
+      <button class="btn btn-primary jh-create-entity" [routerLink]="['./new']">
+        <fa-icon icon="plus"></fa-icon> <span annaTranslate="userManagement.home.createLabel">Create a new User</span>
+      </button>
+    </div>
+  </h2>
+
+  <anna-alert-error></anna-alert-error>
+
+  <anna-alert></anna-alert>
+
+  <div class="table-responsive" *ngIf="users">
+    <table class="table table-striped" aria-describedby="user-management-page-heading">
+      <thead>
+        <tr annaSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition()">
+          <th scope="col" annaSortBy="id"><span annaTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" annaSortBy="login"><span annaTranslate="userManagement.login">Login</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" annaSortBy="email"><span annaTranslate="userManagement.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+          <th scope="col" annaSortBy="langKey">
+            <span annaTranslate="userManagement.langKey">Lang Key</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"><span annaTranslate="userManagement.profiles">Profiles</span></th>
+          <th scope="col" annaSortBy="createdDate">
+            <span annaTranslate="userManagement.createdDate">Created Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" annaSortBy="lastModifiedBy">
+            <span annaTranslate="userManagement.lastModifiedBy">Last Modified By</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" annaSortBy="lastModifiedDate">
+            <span annaTranslate="userManagement.lastModifiedDate">Last Modified Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="users">
+        <tr *ngFor="let user of users; trackBy: trackIdentity">
+          <td>
+            <a [routerLink]="['./', user.login, 'view']">{{ user.id }}</a>
+          </td>
+          <td>{{ user.login }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="setActive(user, true)"
+              *ngIf="!user.activated"
+              annaTranslate="userManagement.deactivated"
+            >
+              Deactivated
+            </button>
+            <button
+              class="btn btn-success btn-sm"
+              (click)="setActive(user, false)"
+              *ngIf="user.activated"
+              [disabled]="!currentAccount || currentAccount.login === user.login"
+              annaTranslate="userManagement.activated"
+            >
+              Activated
+            </button>
+          </td>
+          <td>{{ user.langKey }}</td>
+          <td>
+            <div *ngFor="let authority of user.authorities">
+              <span class="badge bg-info">{{ authority }}</span>
+            </div>
+          </td>
+          <td>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
+          <td>{{ user.lastModifiedBy }}</td>
+          <td>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['./', user.login, 'view']" class="btn btn-info btn-sm">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['./', user.login, 'edit']" queryParamsHandling="merge" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button
+                type="button"
+                (click)="deleteUser(user)"
+                class="btn btn-danger btn-sm"
+                [disabled]="!currentAccount || currentAccount.login === user.login"
+              >
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" annaTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="users">
+    <div class="d-flex justify-content-center">
+      <anna-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></anna-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="transition()"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
